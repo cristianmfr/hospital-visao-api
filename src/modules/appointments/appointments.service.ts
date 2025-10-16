@@ -43,21 +43,21 @@ export class AppointmentsService {
 			queryBuilder.andWhere('atendimento.tdmData <= :end', { end: query.end })
 		}
 
-		// Filter by specific date
 		if (query.date) {
 			queryBuilder.andWhere('atendimento.tdmData = :date', {
 				date: query.date,
 			})
 		}
 
-		// Filter by hour (start time)
 		if (query.hour) {
-			queryBuilder.andWhere('TIME_FORMAT(atendimento.tdmHora, "%H:%i") = :hour', {
-				hour: query.hour,
-			})
+			queryBuilder.andWhere(
+				'TIME_FORMAT(atendimento.tdmHora, "%H:%i") = :hour',
+				{
+					hour: query.hour,
+				},
+			)
 		}
 
-		// Filter by end hour (start time + 30 minutes)
 		if (query.endHour) {
 			queryBuilder.andWhere(
 				'TIME_FORMAT(ADDTIME(atendimento.tdmHora, "00:30:00"), "%H:%i") = :endHour',
@@ -67,21 +67,18 @@ export class AppointmentsService {
 			)
 		}
 
-		// Filter by client name (partial match, case-insensitive)
 		if (query.client) {
 			queryBuilder.andWhere('paciente.pctNome LIKE :client', {
 				client: `%${query.client}%`,
 			})
 		}
 
-		// Filter by location/address (partial match, case-insensitive)
 		if (query.location) {
 			queryBuilder.andWhere('paciente.pctEndereco LIKE :location', {
 				location: `%${query.location}%`,
 			})
 		}
 
-		// Filter by state (appointment status)
 		if (query.state) {
 			const stateMap: Record<string, string> = {
 				CONFIRMED: 'CONFIRMADO',

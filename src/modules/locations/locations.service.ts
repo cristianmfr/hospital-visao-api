@@ -31,14 +31,12 @@ export class LocationsService {
 			.andWhere('paciente.pctEndereco IS NOT NULL')
 			.andWhere('paciente.pctEndereco != :empty', { empty: '' })
 
-		// Filter by client
 		if (query.client) {
 			queryBuilder.andWhere('paciente.pctId = :clientId', {
 				clientId: query.client,
 			})
 		}
 
-		// Filter by professional (get locations where this professional has appointments)
 		if (query.professional) {
 			queryBuilder
 				.innerJoin(
@@ -51,7 +49,6 @@ export class LocationsService {
 				})
 		}
 
-		// Filter by service/specialty (get locations where this specialty has appointments)
 		if (query.service || query.specialty) {
 			const especialidadeId = query.service || query.specialty
 			if (!query.professional) {
@@ -66,7 +63,6 @@ export class LocationsService {
 			})
 		}
 
-		// Group by address to avoid duplicates
 		queryBuilder
 			.groupBy('paciente.pctEndereco')
 			.addGroupBy('paciente.pctComplemento')

@@ -18,14 +18,12 @@ export class PlansService {
 			.where('convenio.cvnSituacao = :situacao', { situacao: 'ATIVO' })
 			.orderBy('convenio.cvnNome', 'ASC')
 
-		// Filter by healthInsurance (return only plans for this health insurance)
 		if (query.healthInsurance) {
 			queryBuilder.andWhere('convenio.cvnId = :convenioId', {
 				convenioId: query.healthInsurance,
 			})
 		}
 
-		// Filter by professional (return plans accepted by this professional)
 		if (query.professional) {
 			queryBuilder
 				.innerJoin(
@@ -36,13 +34,8 @@ export class PlansService {
 				.andWhere('mc.mcvMedico = :medicoId', { medicoId: query.professional })
 		}
 
-		// Note: location filter is not implemented as there's no direct relationship
-		// between plans and locations in the database schema
-
 		const plans = await queryBuilder.getMany()
 
-		// In this implementation, we're returning health insurances as plans
-		// since the database schema doesn't have a separate plans table
 		return plans.map((plan) => this.transformPlan(plan))
 	}
 

@@ -17,18 +17,15 @@ export class ServicesService {
 			.createQueryBuilder('especialidade')
 			.orderBy('especialidade.spcNome', 'ASC')
 
-		// Filter by enabled status
 		if (query.enabled !== undefined) {
 			const situacao = query.enabled ? 'ATIVA' : 'INATIVA'
 			queryBuilder.where('especialidade.spcSituacao = :situacao', { situacao })
 		} else {
-			// By default, only return active services
 			queryBuilder.where('especialidade.spcSituacao = :situacao', {
 				situacao: 'ATIVA',
 			})
 		}
 
-		// Filter by professional
 		if (query.professional) {
 			queryBuilder
 				.innerJoin(
@@ -39,7 +36,6 @@ export class ServicesService {
 				.andWhere('me.mspMedico = :medicoId', { medicoId: query.professional })
 		}
 
-		// Filter by healthInsurance or plan
 		if (query.healthInsurance || query.plan) {
 			const convenioId = query.healthInsurance || query.plan
 			queryBuilder
@@ -51,7 +47,6 @@ export class ServicesService {
 				.andWhere('mce.msvConvenio = :convenioId', { convenioId })
 		}
 
-		// Filter by location (services with appointments at this location)
 		if (query.location) {
 			queryBuilder
 				.innerJoin(
@@ -64,22 +59,19 @@ export class ServicesService {
 				})
 		}
 
-		// Filter by specialty (same as self, so just filter by ID)
 		if (query.specialty) {
 			queryBuilder.andWhere('especialidade.spcId = :especialidadeId', {
 				especialidadeId: query.specialty,
 			})
 		}
 
-		// Group by to avoid duplicates
 		queryBuilder.groupBy('especialidade.spcId')
 
 		const services = await queryBuilder.getMany()
 
-		// Get prices for services if healthInsurance/plan is specified
 		const servicesWithPrices = await Promise.all(
 			services.map(async (service) => {
-				let price: number | undefined = undefined
+				let price: number | undefined
 
 				if (query.healthInsurance || query.plan) {
 					const convenioId = query.healthInsurance || query.plan
@@ -134,9 +126,9 @@ export class ServicesService {
 			id: specialty.spcId.toString(),
 			name: specialty.spcNome,
 			price: price,
-			duration: 30, // Default duration, could be configured per specialty
-			description: undefined, // Not available in database
-			preparation: undefined, // Not available in database
+			duration: 30,
+			description: undefined,
+			preparation: undefined,
 		}
 	}
 }

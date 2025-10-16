@@ -20,7 +20,6 @@ export class HealthInsurancesService {
 			.where('convenio.cvnSituacao = :situacao', { situacao: 'ATIVO' })
 			.orderBy('convenio.cvnNome', 'ASC')
 
-		// Filter by professional (medico)
 		if (query.professional) {
 			queryBuilder
 				.innerJoin(
@@ -31,9 +30,7 @@ export class HealthInsurancesService {
 				.andWhere('mc.mcvMedico = :medicoId', { medicoId: query.professional })
 		}
 
-		// Filter by service (especialidade)
 		if (query.service) {
-			// Join with medico_convenio_especialidade_valor to filter by specialty
 			queryBuilder
 				.innerJoin(
 					'rlc_medico_convenio_especialidade_valor',
@@ -44,9 +41,6 @@ export class HealthInsurancesService {
 					especialidadeId: query.service,
 				})
 		}
-
-		// Note: location filter is not implemented as there's no direct relationship
-		// between convenio and location in the database schema
 
 		const healthInsurances = await queryBuilder.getMany()
 
@@ -71,7 +65,7 @@ export class HealthInsurancesService {
 		return {
 			id: healthInsurance.cvnId.toString(),
 			name: healthInsurance.cvnNome,
-			color: undefined, // No color field in database, could be added later
+			color: undefined,
 		}
 	}
 }

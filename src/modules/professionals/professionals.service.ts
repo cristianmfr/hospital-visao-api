@@ -23,16 +23,15 @@ export class ProfessionalsService {
 			.createQueryBuilder('medico')
 			.orderBy('medico.mdcNome', 'ASC')
 
-		// Filter by enabled status
 		if (query.enabled !== undefined) {
 			const situacao = query.enabled ? 'ATIVO' : 'INATIVO'
 			queryBuilder.where('medico.mdcSituacao = :situacao', { situacao })
 		} else {
-			// By default, only return active professionals
-			queryBuilder.where('medico.mdcSituacao = :situacao', { situacao: 'ATIVO' })
+			queryBuilder.where('medico.mdcSituacao = :situacao', {
+				situacao: 'ATIVO',
+			})
 		}
 
-		// Filter by location (professionals who have appointments at this location)
 		if (query.location) {
 			queryBuilder
 				.innerJoin(
@@ -45,7 +44,6 @@ export class ProfessionalsService {
 				})
 		}
 
-		// Filter by service/specialty
 		if (query.service || query.specialty) {
 			const especialidadeId = query.service || query.specialty
 			queryBuilder
@@ -59,25 +57,18 @@ export class ProfessionalsService {
 				})
 		}
 
-		// Filter by health insurance
 		if (query.healthInsurance) {
 			queryBuilder
-				.innerJoin(
-					'rlc_medico_convenio',
-					'mc',
-					'mc.mcvMedico = medico.mdcId',
-				)
+				.innerJoin('rlc_medico_convenio', 'mc', 'mc.mcvMedico = medico.mdcId')
 				.andWhere('mc.mcvConvenio = :convenioId', {
 					convenioId: query.healthInsurance,
 				})
 		}
 
-		// Group by to avoid duplicates when using joins
 		queryBuilder.groupBy('medico.mdcId')
 
 		const professionals = await queryBuilder.getMany()
 
-		// Load specialties for each professional
 		const professionalsWithSpecialties = await Promise.all(
 			professionals.map(async (prof) => {
 				const specialties = await this.getSpecialtiesForProfessional(prof.mdcId)
@@ -136,7 +127,7 @@ export class ProfessionalsService {
 			id: professional.mdcId.toString(),
 			name: professional.mdcNome,
 			description: professional.mdcObservacao || undefined,
-			image: undefined, // No image field in database
+			image: undefined,
 			expertise: specialties.length > 0 ? specialties[0].spcNome : undefined,
 			register: crm,
 			specialties: specialtiesDto.length > 0 ? specialtiesDto : undefined,
