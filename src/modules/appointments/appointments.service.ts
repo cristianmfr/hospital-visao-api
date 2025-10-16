@@ -39,6 +39,60 @@ export class AppointmentsService {
 			queryBuilder.andWhere('atendimento.tdmData <= :end', { end: query.end })
 		}
 
+		// Filter by specific date
+		if (query.date) {
+			queryBuilder.andWhere('atendimento.tdmData = :date', {
+				date: query.date,
+			})
+		}
+
+		// Filter by hour (start time)
+		if (query.hour) {
+			queryBuilder.andWhere('TIME_FORMAT(atendimento.tdmHora, "%H:%i") = :hour', {
+				hour: query.hour,
+			})
+		}
+
+		// Filter by end hour (start time + 30 minutes)
+		if (query.endHour) {
+			queryBuilder.andWhere(
+				'TIME_FORMAT(ADDTIME(atendimento.tdmHora, "00:30:00"), "%H:%i") = :endHour',
+				{
+					endHour: query.endHour,
+				},
+			)
+		}
+
+		// Filter by client name (partial match, case-insensitive)
+		if (query.client) {
+			queryBuilder.andWhere('paciente.pctNome LIKE :client', {
+				client: `%${query.client}%`,
+			})
+		}
+
+		// Filter by location/address (partial match, case-insensitive)
+		if (query.location) {
+			queryBuilder.andWhere('paciente.pctEndereco LIKE :location', {
+				location: `%${query.location}%`,
+			})
+		}
+
+		// Filter by state (appointment status)
+		if (query.state) {
+			const stateMap: Record<string, string> = {
+				CONFIRMED: 'CONFIRMADO',
+				PENDING: 'PENDENTE',
+				CANCELLED: 'CANCELADO',
+				COMPLETED: 'REALIZADO',
+			}
+			const dbState = stateMap[query.state.toUpperCase()]
+			if (dbState) {
+				queryBuilder.andWhere('atendimento.tdmSituacao = :state', {
+					state: dbState,
+				})
+			}
+		}
+
 		const appointments = await queryBuilder
 			.select([
 				'atendimento.tdmId as atendimento_tdmId',
@@ -72,6 +126,59 @@ export class AppointmentsService {
 			.getRawMany()
 
 		return appointments.map((apt) => this.transformAppointment(apt))
+	}
+
+	async findOne(id: number): Promise<AppointmentResponseDto | null> {
+		const appointment = await this.appointmentRepository
+			.createQueryBuilder('atendimento')
+			.leftJoin(
+				'dad_paciente',
+				'paciente',
+				'paciente.pctId = atendimento.tdmPaciente',
+			)
+			.leftJoin('dad_medico', 'medico', 'medico.mdcId = atendimento.tdmMedico')
+			.leftJoin(
+				'dad_especialidade',
+				'especialidade',
+				'especialidade.spcId = atendimento.tdmEspecialidade',
+			)
+			.where('atendimento.tdmId = :id', { id })
+			.select([
+				'atendimento.tdmId as atendimento_tdmId',
+				'atendimento.tdmData as atendimento_tdmData',
+				'atendimento.tdmHora as atendimento_tdmHora',
+				'atendimento.tdmSituacao as atendimento_tdmSituacao',
+				'atendimento.tdmRetorno as atendimento_tdmRetorno',
+				'paciente.pctId as paciente_pctId',
+				'paciente.pctNome as paciente_pctNome',
+				'paciente.pctCPF as paciente_pctCPF',
+				'paciente.pctRG as paciente_pctRG',
+				'paciente.pctNascimento as paciente_pctNascimento',
+				'paciente.pctSexo as paciente_pctSexo',
+				'paciente.pctEndereco as paciente_pctEndereco',
+				'paciente.pctComplemento as paciente_pctComplemento',
+				'paciente.pctNumero as paciente_pctNumero',
+				'paciente.pctBairro as paciente_pctBairro',
+				'paciente.pctCEP as paciente_pctCEP',
+				'paciente.pctTelefone as paciente_pctTelefone',
+				'paciente.pctCelular as paciente_pctCelular',
+				'paciente.pctEmail as paciente_pctEmail',
+				'paciente.pctNomeMae as paciente_pctNomeMae',
+				'paciente.pctNomePai as paciente_pctNomePai',
+				'paciente.pctProfissao as paciente_pctProfissao',
+				'paciente.pctEstadoCivil as paciente_pctEstadoCivil',
+				'medico.mdcId as medico_mdcId',
+				'medico.mdcNome as medico_mdcNome',
+				'especialidade.spcId as especialidade_spcId',
+				'especialidade.spcNome as especialidade_spcNome',
+			])
+			.getRawOne()
+
+		if (!appointment) {
+			return null
+		}
+
+		return this.transformAppointment(appointment)
 	}
 
 	private removePhoneFormatting(phone: string): string {
