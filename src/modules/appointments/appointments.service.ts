@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { addMinutes, format, parse } from 'date-fns'
 import type { Repository } from 'typeorm'
 import { AppointmentsQueryDto } from './dto/appointments-query.dto'
 import { AppointmentResponseDto } from './dto/appointments-response.dto'
+import {
+	AppointmentState,
+	UpdateAppointmentStateDto,
+} from './dto/update-appointment-state.dto'
 import { Appointment } from './models/appointment.model'
 
 @Injectable()
@@ -179,6 +183,30 @@ export class AppointmentsService {
 		}
 
 		return this.transformAppointment(appointment)
+	}
+
+	async updateState(
+		id: number,
+		updateStateDto: UpdateAppointmentStateDto,
+	): Promise<void> {
+		const appointment = await this.appointmentRepository.findOne({
+			where: { tdmId: id },
+		})
+
+		if (!appointment) {
+			throw new NotFoundException(`Appointment with ID ${id} not found`)
+		}
+
+		const stateMap: Record<AppointmentState, string> = {
+			[AppointmentState.CONFIRMED]: 'CONFIRMADO',
+			[AppointmentState.PENDING]: 'PENDENTE',
+			[AppointmentState.CANCELLED]: 'CANCELADO',
+			[AppointmentState.COMPLETED]: 'REALIZADO',
+		}
+
+		appointment.tdmSituacao = stateMap[updateStateDto.state]
+
+		await this.appointmentRepository.save(appointment)
 	}
 
 	private removePhoneFormatting(phone: string): string {
