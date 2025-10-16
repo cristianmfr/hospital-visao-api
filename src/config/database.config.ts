@@ -2,6 +2,7 @@ import { ConfigService } from '@nestjs/config'
 import { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { Appointment } from 'src/modules/appointments/models/appointment.model'
 import { Client } from 'src/modules/clients/models/client.model'
+import { HealthInsurance } from 'src/modules/health-insurances/models/health-insurance.model'
 
 export const getDatabaseConfig = (
 	configService: ConfigService,
@@ -12,7 +13,7 @@ export const getDatabaseConfig = (
 	username: configService.get('DB_USERNAME'),
 	password: configService.get('DB_PASSWORD'),
 	database: configService.get('DB_DATABASE'),
-	entities: [Appointment, Client],
+	entities: [Appointment, Client, HealthInsurance],
 	synchronize: false,
 	logging: configService.get('NODE_ENV') === 'development',
 	charset: 'utf8mb4',
