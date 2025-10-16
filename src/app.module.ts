@@ -5,6 +5,7 @@ import { getDatabaseConfig } from './config/database.config'
 import { AppointmentsModule } from './modules/appointments/appointments.module'
 import { ClientsModule } from './modules/clients/clients.module'
 import { HealthInsurancesModule } from './modules/health-insurances/health-insurances.module'
+import { LocationsModule } from './modules/locations/locations.module'
 
 @Module({
 	imports: [
@@ -19,6 +20,7 @@ import { HealthInsurancesModule } from './modules/health-insurances/health-insur
 		AppointmentsModule,
 		ClientsModule,
 		HealthInsurancesModule,
+		LocationsModule,
 	],
 })
 export class AppModule {}
