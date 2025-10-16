@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import {
-	addDays,
 	addMinutes,
 	eachDayOfInterval,
 	format,
@@ -40,34 +39,28 @@ export class ScheduleService {
 		const startDate = parseISO(query.start)
 		const endDate = parseISO(query.end)
 
-		// Get all days in the range
 		const days = eachDayOfInterval({ start: startDate, end: endDate })
 
-		// Get professional agendas
 		const agendas = await this.getProfessionalAgendas(query)
 
-		// Get existing appointments
 		const existingAppointments = await this.getExistingAppointments(
 			query,
 			startDate,
 			endDate,
 		)
 
-		// Build schedule for each day
 		const schedule: ScheduleResponseDto = {}
 
 		for (const day of days) {
 			const dateKey = format(day, 'yyyy-MM-dd')
-			const dayOfWeek = getDay(day) // 0 = Sunday, 1 = Monday, etc.
+			const dayOfWeek = getDay(day)
 
-			// Get agendas for this day of week
 			const dayAgendas = agendas.filter(
 				(agenda) => agenda.mgdDiaSemana === dayOfWeek,
 			)
 
 			const timeSlots: TimeSlotDto[] = []
 
-			// Generate time slots for each agenda
 			for (const agenda of dayAgendas) {
 				const slots = this.generateTimeSlotsForAgenda(
 					day,
@@ -77,16 +70,12 @@ export class ScheduleService {
 				timeSlots.push(...slots)
 			}
 
-			// Sort time slots by start time
 			timeSlots.sort((a, b) => a.start.localeCompare(b.start))
 
-			// Remove duplicates
 			const uniqueSlots = timeSlots.filter(
 				(slot, index, self) =>
 					index ===
-					self.findIndex(
-						(s) => s.start === slot.start && s.end === slot.end,
-					),
+					self.findIndex((s) => s.start === slot.start && s.end === slot.end),
 			)
 
 			schedule[dateKey] = uniqueSlots
@@ -112,14 +101,12 @@ export class ScheduleService {
 			)
 			.where('medico.mdcSituacao = :situacao', { situacao: 'ATIVO' })
 
-		// Filter by professional
 		if (query.professional) {
 			queryBuilder.andWhere('medico.mdcId = :medicoId', {
 				medicoId: query.professional,
 			})
 		}
 
-		// Filter by specialty/service
 		if (query.specialty || query.service) {
 			const especialidadeId = query.specialty || query.service
 			queryBuilder.andWhere('mgs.mgsEspecialidade = :especialidadeId', {
@@ -127,15 +114,10 @@ export class ScheduleService {
 			})
 		}
 
-		// Filter by healthInsurance/plan
 		if (query.healthInsurance || query.plan) {
 			const convenioId = query.healthInsurance || query.plan
 			queryBuilder
-				.innerJoin(
-					'rlc_medico_convenio',
-					'mc',
-					'mc.mcvMedico = medico.mdcId',
-				)
+				.innerJoin('rlc_medico_convenio', 'mc', 'mc.mcvMedico = medico.mdcId')
 				.andWhere('mc.mcvConvenio = :convenioId', { convenioId })
 		}
 
@@ -199,10 +181,9 @@ export class ScheduleService {
 			const timeKey = format(currentTime, 'HH:mm')
 			const dateKey = format(day, 'yyyy-MM-dd')
 
-			// Check if this slot is already booked
 			const isBooked = existingAppointments.some((apt) => {
 				const aptDate = format(apt.tdmData, 'yyyy-MM-dd')
-				const aptTime = apt.tdmHora.substring(0, 5) // Get HH:mm from HH:mm:ss
+				const aptTime = apt.tdmHora.substring(0, 5)
 
 				return (
 					aptDate === dateKey &&
