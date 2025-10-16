@@ -8,6 +8,9 @@ import { HealthInsurancesModule } from './modules/health-insurances/health-insur
 import { LocationsModule } from './modules/locations/locations.module'
 import { PlansModule } from './modules/plans/plans.module'
 import { ProfessionalsModule } from './modules/professionals/professionals.module'
+import { ScheduleModule } from './modules/schedule/schedule.module'
+import { ServicesModule } from './modules/services/services.module'
+import { SpecialtiesModule } from './modules/specialties/specialties.module'
 
 @Module({
 	imports: [
@@ -25,6 +28,9 @@ import { ProfessionalsModule } from './modules/professionals/professionals.modul
 		LocationsModule,
 		PlansModule,
 		ProfessionalsModule,
+		ScheduleModule,
+		ServicesModule,
+		SpecialtiesModule,
 	],
 })
 export class AppModule {}
