@@ -6,13 +6,14 @@ import {
 	HttpStatus,
 	NotFoundException,
 	Param,
-	ParseIntPipe,
 	Patch,
+	Post,
 	Query,
 } from '@nestjs/common'
 import { AppointmentsService } from './appointments.service'
 import { AppointmentsQueryDto } from './dto/appointments-query.dto'
 import { AppointmentResponseDto } from './dto/appointments-response.dto'
+import { CreateAppointmentDto } from './dto/create-appointment.dto'
 import { UpdateAppointmentStateDto } from './dto/update-appointment-state.dto'
 
 @Controller('appointments')
@@ -27,9 +28,7 @@ export class AppointmentsController {
 	}
 
 	@Get(':id')
-	async findOne(
-		@Param('id', ParseIntPipe) id: number,
-	): Promise<AppointmentResponseDto> {
+	async findOne(@Param('id') id: string): Promise<AppointmentResponseDto> {
 		const appointment = await this.appointmentsService.findOne(id)
 
 		if (!appointment) {
@@ -39,10 +38,18 @@ export class AppointmentsController {
 		return appointment
 	}
 
+	@Post()
+	@HttpCode(HttpStatus.CREATED)
+	async create(
+		@Body() createDto: CreateAppointmentDto,
+	): Promise<AppointmentResponseDto> {
+		return this.appointmentsService.create(createDto)
+	}
+
 	@Patch(':id/state')
 	@HttpCode(HttpStatus.OK)
 	async updateState(
-		@Param('id', ParseIntPipe) id: number,
+		@Param('id') id: string,
 		@Body() updateStateDto: UpdateAppointmentStateDto,
 	): Promise<string> {
 		await this.appointmentsService.updateState(id, updateStateDto)

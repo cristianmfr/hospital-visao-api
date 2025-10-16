@@ -1,0 +1,5398 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API para marcação de consultas online",
+    "description": "",
+    "contact": {
+      "name": "Pixeon",
+      "url": "https://portalcliente.pixeon.com/"
+    },
+    "version": "v2"
+  },
+  "servers": [
+    {
+      "url": "/AgendaSmart"
+    }
+  ],
+  "paths": {
+    "/api/Agenda": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Consulta os horários disponiveis para agendamento.",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/confirmar": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Agenda o atendimento do paciente logado ou passado por parâmetro",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaConfirmarMarcacao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/cancelar": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Cancela o agendamento",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.CancelarModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/{dataIni}/{dataFim}": {
+      "get": {
+        "tags": ["Agenda"],
+        "summary": "Marcações em aberto no período para o paciente logado, ou do paciente passado por parâmetro.",
+        "parameters": [
+          {
+            "name": "dataIni",
+            "in": "path",
+            "description": "Data inicial do período da agenda.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dataFim",
+            "in": "path",
+            "description": "Data final do período da agenda.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "PacienteId",
+            "in": "query",
+            "description": "Passar vazio para buscar todos os pacientes ou para considerar apenas o paciente logado",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/confirmarPaciente/{agenda}/{observacao}": {
+      "get": {
+        "tags": ["Agenda"],
+        "summary": "Confirma agendamento do paciente.",
+        "parameters": [
+          {
+            "name": "agenda",
+            "in": "path",
+            "description": "Identificação do Agendamento.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "observacao",
+            "in": "path",
+            "description": "Observação do Agendamento.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/ordem-procedimentos": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Retorna os procedimentos ordenados de acordo com a ordem para marcação",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdemResposta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/agendamentovacinas": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Agendamento de vacinas",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoModelo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/horarios/especialidade": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Consulta os horários disponiveis para agendamento de acordo com a especialidade.",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaFiltroEspecialidade"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/agenda/confirmaStatusPresencaAgendamento": {
+      "post": {
+        "tags": ["Agenda"],
+        "summary": "Confirma o status da presença do agendamento.",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.AgendaStatusPresenca"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Arquivo/{paciente}": {
+      "post": {
+        "tags": ["Arquivo"],
+        "summary": "Anexar arquivo.",
+        "parameters": [
+          {
+            "name": "paciente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/arquivo/agendamento/{agendamentoExterno}/{agendamentoSmart}/{paciente}": {
+      "post": {
+        "tags": ["Arquivo"],
+        "summary": "Anexar questionario agendamento.",
+        "parameters": [
+          {
+            "name": "agendamentoExterno",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "agendamentoSmart",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "paciente",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ArquivoModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/healthCheck": {
+      "get": {
+        "tags": ["BoaConsulta"],
+        "summary": "Estado do servidor.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/horarios/consulta": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Consultar Horários disponiveis",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agendamento/consulta": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Agendar Consulta",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoConsulta"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/solicitacao": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Solicitações de sincronia do barramento.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações de sincronia",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Solicitacao"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/agendamento/exame": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Agendar Exame.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de exame",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoExame"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["BoaConsulta"],
+        "summary": "Cancelar Agendamento de Exame.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de exame a ser cancelado",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/cancela-agendamento/exame": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Cancelar Agendamento de Exame.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de exame a ser cancelado",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/agendamento/vacina": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Agendar Vacina.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de vacina",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.AgendamentoVacina"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["BoaConsulta"],
+        "summary": "Cancelar Agendamento de Vacina.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de exame a ser cancelado",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/cancela-agendamento/vacina": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Cancelar Agendamento de Vacina.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre agendamento de exame a ser cancelado",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.CancelaAgendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/statusAgendamento": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Status do Agendamento.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre status do Agendamento",
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.StatusAgendamento"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.StatusAgendamento"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.StatusAgendamento"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.StatusAgendamento"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/horarios/busca": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Consulta de horários.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "origem",
+            "in": "query",
+            "description": "Origem da requisicao \"marketplace\" \"auto_agendamento\"",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Filtro de horários",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FiltroHorarios"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/planos/busca": {
+      "get": {
+        "tags": ["BoaConsulta"],
+        "summary": "Consulta de Planos por Convenio.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codigoAns",
+            "in": "query",
+            "description": "Código do convenio na ANS",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "origem",
+            "in": "query",
+            "description": "Origem da requisicao \"marketplace\" \"auto_agendamento\"",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "icp",
+            "in": "query",
+            "description": "Código do convênio no Smart",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/exames/cobertura": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Validacao de cobertura do exame.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codigoUnidade",
+            "in": "query",
+            "description": "Código da unidade",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codigoConvenio",
+            "in": "query",
+            "description": "Código do convênio",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "codigoPlano",
+            "in": "query",
+            "description": "Código do plano",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "origem",
+            "in": "query",
+            "description": "Origem da requisicao \"marketplace\" \"auto_agendamento\"",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Exames para validação de cobertura",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/cobertura": {
+      "get": {
+        "tags": ["BoaConsulta"],
+        "summary": "Consulta de cobertura de unidade por CEP",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código da instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "u",
+            "in": "query",
+            "description": "Código da Unidade",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cep",
+            "in": "query",
+            "description": "CEP",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "origem",
+            "in": "query",
+            "description": "Origem da requisicao \"marketplace\" \"auto_agendamento\"",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/servicos/match": {
+      "get": {
+        "tags": ["BoaConsulta"],
+        "summary": "Solicitações de sincronia do barramento.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código da instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nome",
+            "in": "query",
+            "description": "nome do serviço",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tipo",
+            "in": "query",
+            "description": "tipo do serviço no barramento (exame/vacina)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "smk_cod",
+            "in": "query",
+            "description": "código do serviço no smart",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "smk_tipo",
+            "in": "query",
+            "description": "tipo do serviço no smart",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/reserva/v1/exames": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Reservar Exame.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre reserva de exame",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaExame"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/reserva/v1/vacinas": {
+      "post": {
+        "tags": ["BoaConsulta"],
+        "summary": "Reservar Vacina.",
+        "parameters": [
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "description": "Código que identifica a instituição no produto",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações sobre reserva de vacina",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ReservaVacina"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/instituicao/{codigoInstituicao}/prestador/imagem/upload": {
+      "get": {
+        "tags": ["BoaConsulta"],
+        "summary": "Uploado para nuvem da imagem do prestador/médico.",
+        "parameters": [
+          {
+            "name": "psv_cod",
+            "in": "query",
+            "description": "código do prestador/médico",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "psv_img_cod_foto",
+            "in": "query",
+            "description": "código da imagem no smart",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "codigoInstituicao",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Convenio": {
+      "get": {
+        "tags": ["Convenio"],
+        "summary": "Buscar convênios ativos.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/convenio/particular/{particular}": {
+      "get": {
+        "tags": ["Convenio"],
+        "summary": "Buscar convênios por status de particular.",
+        "parameters": [
+          {
+            "name": "particular",
+            "in": "path",
+            "description": "S/N",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/convenio/grupo": {
+      "get": {
+        "tags": ["Convenio"],
+        "summary": "Buscar convênios agrupados por status de particular ou sem.",
+        "parameters": [
+          {
+            "name": "particular",
+            "in": "query",
+            "description": "S/N/Vazio",
+            "schema": {
+              "type": "string",
+              "default": ""
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/convenio": {
+      "post": {
+        "tags": ["ConvenioKorus"],
+        "summary": "Envia uma lista de convênios para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ConvenioKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Especialidade": {
+      "get": {
+        "tags": ["Especialidade"],
+        "summary": "Especialidades ativas.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/especialidade": {
+      "post": {
+        "tags": ["EspecialidadeKorus"],
+        "summary": "Envia uma lista de especialidades para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.EspecialidadeKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/exame": {
+      "post": {
+        "tags": ["ExameKorus"],
+        "summary": "Envia uma lista de exames para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.ExameKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/medico": {
+      "post": {
+        "tags": ["MedicoKorus"],
+        "summary": "Envia uma lista de medicos para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.MedicoKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Paciente": {
+      "get": {
+        "tags": ["Paciente"],
+        "summary": "Retornar o paciente pelo token passado.",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/paciente/buscar": {
+      "get": {
+        "tags": ["Paciente"],
+        "summary": "Busca de paciente por cpf, email ou celular",
+        "parameters": [
+          {
+            "name": "cpf",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "celular",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/paciente": {
+      "post": {
+        "tags": ["PacienteKorus"],
+        "summary": "Envia uma lista de paciente para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PacienteKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/plano": {
+      "post": {
+        "tags": ["PlanoKorus"],
+        "summary": "Envia uma lista de planos para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.PlanoKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Preparo": {
+      "post": {
+        "tags": ["Preparo"],
+        "summary": "Retorna as instruções do procedimento",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.PreparoFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Procedimento": {
+      "post": {
+        "tags": ["Procedimento"],
+        "summary": "Retorna os procedimentos de acordo com o filtro passado.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/procedimento": {
+      "post": {
+        "tags": ["Procedimento"],
+        "summary": "Retorna os procedimentos de acordo com o filtro passado.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/procedimento/{TipoProcedimento}": {
+      "get": {
+        "tags": ["Procedimento"],
+        "summary": "Retorna os procedimentos por tipo",
+        "parameters": [
+          {
+            "name": "TipoProcedimento",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Agenda.Modelo.TipoProcedimento"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profissional/executante": {
+      "post": {
+        "tags": ["Profissional"],
+        "summary": "Retorna os médicos para ser utilizados como executante do procedimento passado.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profissional/solicitante": {
+      "post": {
+        "tags": ["Profissional"],
+        "summary": "Retorna os médicos para ser utilizados como solicitantes.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profissional/executante/especialidade": {
+      "post": {
+        "tags": ["Profissional"],
+        "summary": "Retorna os médicos executantes para serem selecionados pelos pacientes durante o processo de agendamento.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profissional/executante/convenio": {
+      "get": {
+        "tags": ["Profissional"],
+        "summary": "Retorna os médicos executantes de acordo com o convênio e validação em médicos credenciados para serem selecionados pelos pacientes durante o processo de agendamento.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.ProfissionalExecutanteConvenioFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Sessao": {
+      "post": {
+        "tags": ["Sessao"],
+        "summary": "Método para iniciar uma sessão",
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Modelo.LoginModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Sessao"],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sessao/{tokenRenovacao}": {
+      "put": {
+        "tags": ["Sessao"],
+        "parameters": [
+          {
+            "name": "tokenRenovacao",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/sinonimos": {
+      "post": {
+        "tags": ["SinonimoKorus"],
+        "summary": "Envia uma lista de sinonimos para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.SinonimoKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/unidade": {
+      "post": {
+        "tags": ["Unidade"],
+        "summary": "Retorna unidades para possivel agendamento do procedimento informado.",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.UnidadeFiltro"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/korus/unidade": {
+      "post": {
+        "tags": ["UnidadeKorus"],
+        "summary": "Envia uma lista de unidades para cadastrar no KORUS",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "senha",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dominio",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Comum.Data.Contracts.UnidadeKorusList"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Usuario": {
+      "post": {
+        "tags": ["Usuario"],
+        "requestBody": {
+          "content": {
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "text/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "application/*+xml": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Agenda.Modelo.Usuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/usuario/confirma/id/{id}/email/{email}/data/{data}": {
+      "get": {
+        "tags": ["Usuario"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "data",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Agenda.Modelo.AgendaProcedimentoFiltroModel": {
+        "type": "object",
+        "properties": {
+          "ProcedimentoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConvenioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "PlanoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "UnidadeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProfissionalExecutanteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProfissionalSolicitanteId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendaFiltro": {
+        "type": "object",
+        "properties": {
+          "DataIni": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DataFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "PacCep": {
+            "type": "string",
+            "nullable": true
+          },
+          "ListaProcedimento": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.AgendaProcedimentoFiltroModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendaConfirmarMarcacao": {
+        "required": [
+          "ConvenioId",
+          "ProcedimentoId",
+          "ProfissionalExecutanteId",
+          "UnidadeId"
+        ],
+        "type": "object",
+        "properties": {
+          "ConvenioId": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "PlanoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "MatriculaId": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "DtmarcacaoIni": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DtmarcacaoFim": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "PacCep": {
+            "type": "string",
+            "nullable": true
+          },
+          "UnidadeId": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "ProcedimentoId": {
+            "type": "string"
+          },
+          "ProfissionalExecutanteId": {
+            "type": "string"
+          },
+          "ProfissionalSolicitanteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Observacao": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "EnderecoColetaDomiciliar": {
+            "maxLength": 255,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "PacienteId": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.CancelarModel": {
+        "type": "object",
+        "properties": {
+          "PacienteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProcedimentoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProfissionalExecutanteId": {
+            "type": "string",
+            "nullable": true
+          },
+          "DataHora": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProcedimentoOrdemFiltro": {
+        "type": "object",
+        "properties": {
+          "ProcedimentoId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProcedimentoOrdem": {
+        "type": "object",
+        "properties": {
+          "ProcedimentoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Ordem": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProcedimentoOrdemResposta": {
+        "type": "object",
+        "properties": {
+          "Procedimentos": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.ProcedimentoOrdem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendamentoItem": {
+        "type": "object",
+        "properties": {
+          "SeqAgmSmkFilho": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "AgmSmkFilho": {
+            "type": "string",
+            "nullable": true
+          },
+          "SmkCnvCod": {
+            "type": "string",
+            "nullable": true
+          },
+          "SmkPlnCod": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendamentoModelo": {
+        "type": "object",
+        "properties": {
+          "AgmCodExterno": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmHini": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "AgmHfim": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "AgmDtmrc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "AgmMed": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "AgmLoc": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmPac": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "AgmSmk": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmExt": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmUsrLogin": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmObs": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmNum": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "AgmStat": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmCnvCod": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmPln": {
+            "type": "string",
+            "nullable": true
+          },
+          "AgmPrecoTxServicoDomiciliar": {
+            "type": "number",
+            "format": "double"
+          },
+          "Logradouro": {
+            "type": "string",
+            "nullable": true
+          },
+          "Complemento": {
+            "type": "string",
+            "nullable": true
+          },
+          "Bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "CEP": {
+            "type": "string",
+            "nullable": true
+          },
+          "Cidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "Estado": {
+            "type": "string",
+            "nullable": true
+          },
+          "Numero": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "AgendamentoSmkFilho": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.AgendamentoItem"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendaFiltroEspecialidade": {
+        "type": "object",
+        "properties": {
+          "DataIni": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "DataFim": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "PacCep": {
+            "type": "string",
+            "nullable": true
+          },
+          "Especialidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "ListaProcedimento": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.AgendaProcedimentoFiltroModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.AgendaStatusPresenca": {
+        "required": [
+          "Agenda",
+          "Aplicacao",
+          "DataConfirmacao",
+          "Status",
+          "Usuario"
+        ],
+        "type": "object",
+        "properties": {
+          "Agenda": {
+            "type": "string"
+          },
+          "DataConfirmacao": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "Usuario": {
+            "type": "string"
+          },
+          "Aplicacao": {
+            "type": "string"
+          },
+          "Status": {
+            "type": "string"
+          },
+          "Motivo": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Observacao": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ArquivoModel": {
+        "type": "object",
+        "properties": {
+          "NomeArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "TipoArquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "Arquivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "TipoDocumento": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.FiltroAgendaConsulta": {
+        "type": "object",
+        "properties": {
+          "agenda_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "doctor_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Group": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "order": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Specialty": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "group": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Group"
+              }
+            ],
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "full_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "base": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Patient": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "date_of_birth": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_verified": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Dependent": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "date_of_birth": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.PatientDir": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "date_of_birth": {
+            "type": "string",
+            "nullable": true
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "email_verified": {
+            "type": "boolean"
+          },
+          "cel_phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.HealthCarrier": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "old_slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "ans_code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Agendamento.CancelationOption": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Data": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "agenda_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "doctor_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "location_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
+          "start": {
+            "type": "string",
+            "nullable": true
+          },
+          "end": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "specialty": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Specialty"
+              }
+            ],
+            "nullable": true
+          },
+          "rfe": {
+            "type": "string",
+            "nullable": true
+          },
+          "patient": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Patient"
+              }
+            ],
+            "nullable": true
+          },
+          "dependent": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Dependent"
+              }
+            ],
+            "nullable": true
+          },
+          "patient_dir": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.PatientDir"
+              }
+            ],
+            "nullable": true
+          },
+          "health_carrier": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.HealthCarrier"
+              }
+            ],
+            "nullable": true
+          },
+          "rescheduling_infos": {
+            "type": "string",
+            "nullable": true
+          },
+          "card_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_time": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extended_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "origin": {
+            "type": "string",
+            "nullable": true
+          },
+          "actor": {
+            "type": "string",
+            "nullable": true
+          },
+          "tenant": {
+            "type": "string",
+            "nullable": true
+          },
+          "rsvp": {
+            "type": "string",
+            "nullable": true
+          },
+          "patient_attended": {
+            "type": "string",
+            "nullable": true
+          },
+          "cancelation_option": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Agendamento.CancelationOption"
+              }
+            ],
+            "nullable": true
+          },
+          "cancelation_note": {
+            "type": "string",
+            "nullable": true
+          },
+          "historic": {
+            "type": "boolean"
+          },
+          "private_appointment": {
+            "type": "boolean"
+          },
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "plan_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "patient_note": {
+            "type": "string",
+            "nullable": true
+          },
+          "doctor_note": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_time": {
+            "type": "string",
+            "nullable": true
+          },
+          "confirmed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.AgendamentoConsulta": {
+        "type": "object",
+        "properties": {
+          "event": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Data"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.TipoSolicitacao": {
+        "enum": [
+          "UNIDADES",
+          "UNIDADES_EXAMES",
+          "UNIDADES_VACINAS",
+          "UNIDADES_CONVENIOS",
+          "UNIDADES_EXAMES_HORARIOS",
+          "UNIDADES_VACINAS_HORARIOS",
+          "STATUS"
+        ],
+        "type": "string"
+      },
+      "Agenda.Modelo.BoaConsulta.Solicitacao": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.TipoSolicitacao"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.EnderecoColeta": {
+        "type": "object",
+        "properties": {
+          "logradouro": {
+            "type": "string",
+            "nullable": true
+          },
+          "numero": {
+            "type": "string",
+            "nullable": true
+          },
+          "complemento": {
+            "type": "string",
+            "nullable": true
+          },
+          "cep": {
+            "type": "string",
+            "nullable": true
+          },
+          "bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "cidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Agendamento.Convenio": {
+        "type": "object",
+        "properties": {
+          "codigoANS": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoPlano": {
+            "type": "string",
+            "nullable": true
+          },
+          "particular": {
+            "type": "boolean"
+          },
+          "idProduto": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Endereco": {
+        "type": "object",
+        "properties": {
+          "logradouro": {
+            "type": "string",
+            "nullable": true
+          },
+          "numero": {
+            "type": "string",
+            "nullable": true
+          },
+          "complemento": {
+            "type": "string",
+            "nullable": true
+          },
+          "cep": {
+            "type": "string",
+            "nullable": true
+          },
+          "bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "cidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Paciente": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "altura": {
+            "type": "number",
+            "format": "double"
+          },
+          "peso": {
+            "type": "number",
+            "format": "double"
+          },
+          "sexo": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataNascimento": {
+            "type": "string",
+            "nullable": true
+          },
+          "numeroCarteirinha": {
+            "type": "string",
+            "nullable": true
+          },
+          "vencimentoCarteirinha": {
+            "type": "string",
+            "nullable": true
+          },
+          "convenio": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Agendamento.Convenio"
+              }
+            ],
+            "nullable": true
+          },
+          "endereco": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Endereco"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.RespostaAgendamento": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "resposta": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.QuestionarioAgendamento": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "respostas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.RespostaAgendamento"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Exame": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoReserva": {
+            "type": "string",
+            "nullable": true
+          },
+          "horarioId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tipoDiferenciado": {
+            "type": "boolean"
+          },
+          "dataHora": {
+            "type": "string",
+            "nullable": true
+          },
+          "periodo": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.QuestionarioAgendamento"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Responsavel": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "nome": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "telefone": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataNascimento": {
+            "type": "string",
+            "nullable": true
+          },
+          "sexo": {
+            "type": "string",
+            "nullable": true
+          },
+          "endereco": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Endereco"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Midia": {
+        "type": "object",
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.AgendamentoExame": {
+        "type": "object",
+        "properties": {
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoAgendamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "protocolo": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "plataforma": {
+            "type": "string",
+            "nullable": true
+          },
+          "enderecoColeta": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.EnderecoColeta"
+              }
+            ],
+            "nullable": true
+          },
+          "paciente": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Paciente"
+              }
+            ],
+            "nullable": true
+          },
+          "exames": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Exame"
+            },
+            "nullable": true
+          },
+          "responsavel": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Responsavel"
+              }
+            ],
+            "nullable": true
+          },
+          "midias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Midia"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.CancelaAgendamento": {
+        "type": "object",
+        "properties": {
+          "codigoInstituicao": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoAgendamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "motivo": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoCancelamento": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.EnderecoAplicacao": {
+        "type": "object",
+        "properties": {
+          "logradouro": {
+            "type": "string",
+            "nullable": true
+          },
+          "numero": {
+            "type": "string",
+            "nullable": true
+          },
+          "complemento": {
+            "type": "string",
+            "nullable": true
+          },
+          "cep": {
+            "type": "string",
+            "nullable": true
+          },
+          "bairro": {
+            "type": "string",
+            "nullable": true
+          },
+          "cidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "estado": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.Vacina": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoReserva": {
+            "type": "string",
+            "nullable": true
+          },
+          "horarioId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "tipoDiferenciado": {
+            "type": "boolean"
+          },
+          "dataHora": {
+            "type": "string",
+            "nullable": true
+          },
+          "periodo": {
+            "type": "string",
+            "nullable": true
+          },
+          "questionarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.QuestionarioAgendamento"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.AgendamentoVacina": {
+        "type": "object",
+        "properties": {
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoAgendamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "protocolo": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "plataforma": {
+            "type": "string",
+            "nullable": true
+          },
+          "enderecoAplicacao": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.EnderecoAplicacao"
+              }
+            ],
+            "nullable": true
+          },
+          "paciente": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Paciente"
+              }
+            ],
+            "nullable": true
+          },
+          "vacinas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Vacina"
+            },
+            "nullable": true
+          },
+          "responsavel": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Responsavel"
+              }
+            ],
+            "nullable": true
+          },
+          "midias": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.Midia"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.StatusAgendamento": {
+        "type": "object",
+        "properties": {
+          "codigoInstituicao": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoAgendamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "mensagem": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.LocalidadeHorarios": {
+        "type": "object",
+        "properties": {
+          "cep": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.FormaPagamento": {
+        "type": "object",
+        "properties": {
+          "particular": {
+            "type": "boolean"
+          },
+          "codigoConvenio": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoPlano": {
+            "type": "string",
+            "nullable": true
+          },
+          "idConvenioProduto": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.FiltroHorarios": {
+        "type": "object",
+        "properties": {
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "exames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "vacinas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "localidade": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.LocalidadeHorarios"
+              }
+            ],
+            "nullable": true
+          },
+          "dataInicio": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataFim": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoAgendamento": {
+            "type": "string",
+            "nullable": true
+          },
+          "origem": {
+            "type": "string",
+            "nullable": true
+          },
+          "formaPagamento": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.FormaPagamento"
+              }
+            ],
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.ExameReserva": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "horarioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataHora": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.PacienteReserva": {
+        "type": "object",
+        "properties": {
+          "cpf": {
+            "type": "string",
+            "nullable": true
+          },
+          "dataNascimento": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.ConvenioReserva": {
+        "type": "object",
+        "properties": {
+          "idProduto": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoANS": {
+            "type": "string",
+            "nullable": true
+          },
+          "particular": {
+            "type": "boolean"
+          },
+          "codigoPlano": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.ReservaExame": {
+        "type": "object",
+        "properties": {
+          "codigoInstituicao": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "protocolo": {
+            "type": "string",
+            "nullable": true
+          },
+          "origem": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoDiferenciado": {
+            "type": "boolean"
+          },
+          "exame": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ExameReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "paciente": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.PacienteReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "convenio": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ConvenioReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cep": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.VacinaReserva": {
+        "type": "object",
+        "properties": {
+          "codigo": {
+            "type": "string",
+            "nullable": true
+          },
+          "horarioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dataHora": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.BoaConsulta.ReservaVacina": {
+        "type": "object",
+        "properties": {
+          "codigoInstituicao": {
+            "type": "string",
+            "nullable": true
+          },
+          "codigoUnidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "protocolo": {
+            "type": "string",
+            "nullable": true
+          },
+          "origem": {
+            "type": "string",
+            "nullable": true
+          },
+          "tipoDiferenciado": {
+            "type": "boolean"
+          },
+          "vacina": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.VacinaReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "paciente": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.PacienteReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "convenio": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.BoaConsulta.ConvenioReserva"
+              }
+            ],
+            "nullable": true
+          },
+          "tipo": {
+            "type": "string",
+            "nullable": true
+          },
+          "cep": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.ConvenioKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.EspecialidadeKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.ExameKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.MedicoKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.PacienteKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.PlanoKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.PreparoFiltro": {
+        "type": "object",
+        "properties": {
+          "UnidadeId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProcedimentoId": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProcedimentoFiltro": {
+        "type": "object",
+        "properties": {
+          "ConvenioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "PlanoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "NomeProcedimento": {
+            "type": "string",
+            "nullable": true
+          },
+          "TipoProcedimento": {
+            "type": "string",
+            "nullable": true
+          },
+          "EspecialidadeId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.TipoProcedimento": {
+        "enum": ["CONSULTA", "EXAME", "COLETA_DOMICILIAR", "VACINA", "TERAPIA"],
+        "type": "string"
+      },
+      "Agenda.Modelo.ProfissionalExecutanteFiltro": {
+        "type": "object",
+        "properties": {
+          "ProcedimentoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "NomeProfissional": {
+            "type": "string",
+            "nullable": true
+          },
+          "Conselho": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoNumero": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoUF": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProfissionalFiltro": {
+        "type": "object",
+        "properties": {
+          "NomeProfissional": {
+            "type": "string",
+            "nullable": true
+          },
+          "Conselho": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoNumero": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoUF": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProfissionalExecutanteEspecialidadeFiltro": {
+        "required": ["classe", "especialidade", "ProcedimentoId", "unidade"],
+        "type": "object",
+        "properties": {
+          "classe": {
+            "maxLength": 7,
+            "minLength": 0,
+            "type": "string"
+          },
+          "especialidade": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "unidade": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "ProcedimentoId": {
+            "maxLength": 8,
+            "minLength": 0,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.ProfissionalExecutanteConvenioFiltro": {
+        "required": ["ConvenioId", "ProcedimentoId"],
+        "type": "object",
+        "properties": {
+          "ProcedimentoId": {
+            "maxLength": 8,
+            "minLength": 0,
+            "type": "string"
+          },
+          "ConvenioId": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "PlanoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Unidade": {
+            "type": "string",
+            "nullable": true
+          },
+          "NomeProfissional": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Conselho": {
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoNumero": {
+            "maxLength": 10,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "ConselhoUF": {
+            "maxLength": 2,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Comum.Modelo.LoginModel": {
+        "type": "object",
+        "properties": {
+          "Login": {
+            "type": "string",
+            "nullable": true
+          },
+          "Senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "App": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.SinonimoKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.UnidadeFiltro": {
+        "type": "object",
+        "properties": {
+          "ConvenioId": {
+            "type": "string",
+            "nullable": true
+          },
+          "PlanoId": {
+            "type": "string",
+            "nullable": true
+          },
+          "ProcedimentoId": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Comum.Data.Contracts.UnidadeKorusList": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.Endereco": {
+        "type": "object",
+        "properties": {
+          "Bairro": {
+            "maxLength": 40,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "CEP": {
+            "maxLength": 9,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Cidade": {
+            "maxLength": 20,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Complemento": {
+            "type": "string",
+            "nullable": true
+          },
+          "Logradouro": {
+            "type": "string",
+            "nullable": true
+          },
+          "Estado": {
+            "maxLength": 2,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Numero": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Agenda.Modelo.Usuario": {
+        "required": ["ConvenioId", "CPF", "Nome", "Sexo"],
+        "type": "object",
+        "properties": {
+          "Email": {
+            "type": "string",
+            "nullable": true
+          },
+          "Senha": {
+            "type": "string",
+            "nullable": true
+          },
+          "Nome": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "NomeSocial": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Nascimento": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Sexo": {
+            "maxLength": 1,
+            "minLength": 0,
+            "type": "string"
+          },
+          "CPF": {
+            "maxLength": 12,
+            "minLength": 0,
+            "type": "string"
+          },
+          "RG": {
+            "maxLength": 12,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Endereco": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Agenda.Modelo.Endereco"
+              }
+            ],
+            "nullable": true
+          },
+          "Telefone": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Celular": {
+            "maxLength": 14,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "Whatsapp": {
+            "maxLength": 1,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "ConvenioId": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string"
+          },
+          "PlanoId": {
+            "maxLength": 3,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "MatriculaId": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "AtivarUsuarioPorEmail": {
+            "maxLength": 1,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "UsuarioId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "HashEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "HashData": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
