@@ -7,6 +7,7 @@ import { ClientsModule } from './modules/clients/clients.module'
 import { HealthInsurancesModule } from './modules/health-insurances/health-insurances.module'
 import { LocationsModule } from './modules/locations/locations.module'
 import { PlansModule } from './modules/plans/plans.module'
+import { ProfessionalsModule } from './modules/professionals/professionals.module'
 
 @Module({
 	imports: [
@@ -23,6 +24,7 @@ import { PlansModule } from './modules/plans/plans.module'
 		HealthInsurancesModule,
 		LocationsModule,
 		PlansModule,
+		ProfessionalsModule,
 	],
 })
 export class AppModule {}
