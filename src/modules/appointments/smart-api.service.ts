@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosError, AxiosInstance } from 'axios'
 
 export interface SmartAppointment {
 	SeqAgmSmkFilho?: number
@@ -77,19 +77,101 @@ export interface CancelAppointmentRequest {
 
 @Injectable()
 export class SmartApiService {
+	private readonly logger = new Logger(SmartApiService.name)
 	private readonly axiosInstance: AxiosInstance
+	private currentToken: string | null = null
+	private tokenRefreshPromise: Promise<string> | null = null
 
 	constructor(private configService: ConfigService) {
 		const baseURL = this.configService.get<string>('SMART_API_BASE_URL')
-		const token = this.configService.get<string>('SMART_API_TOKEN')
 
 		this.axiosInstance = axios.create({
 			baseURL,
 			headers: {
 				'Content-Type': 'application/json',
-				'X-AUTH-TOKEN': token,
 			},
 		})
+
+		this.setupInterceptors()
+	}
+
+	private setupInterceptors() {
+		this.axiosInstance.interceptors.request.use(
+			async (config) => {
+				if (!this.currentToken) {
+					await this.login()
+				}
+				config.headers['X-AUTH-TOKEN'] = this.currentToken
+				return config
+			},
+			(error) => Promise.reject(error),
+		)
+
+		this.axiosInstance.interceptors.response.use(
+			(response) => response,
+			async (error: AxiosError) => {
+				const originalRequest = error.config as any
+
+				if (error.response?.status === 401 && !originalRequest._retry) {
+					originalRequest._retry = true
+
+					try {
+						this.logger.warn('Token expired, refreshing...')
+						await this.login()
+						originalRequest.headers['X-AUTH-TOKEN'] = this.currentToken
+						return this.axiosInstance(originalRequest)
+					} catch (refreshError) {
+						this.logger.error('Failed to refresh token', refreshError)
+						return Promise.reject(refreshError)
+					}
+				}
+
+				return Promise.reject(error)
+			},
+		)
+	}
+
+	private async login(): Promise<string> {
+		if (this.tokenRefreshPromise) {
+			return this.tokenRefreshPromise
+		}
+
+		this.tokenRefreshPromise = (async () => {
+			try {
+				const username = this.configService.get<string>('SMART_API_USERNAME')
+				const password = this.configService.get<string>('SMART_API_PASSWORD')
+				const app =
+					this.configService.get<string>('SMART_API_APP') || 'HospitalVisaoAPI'
+
+				this.logger.log('Authenticating with Smart API...')
+
+				const response = await axios.post<string>(
+					`${this.configService.get<string>('SMART_API_BASE_URL')}/api/Sessao`,
+					{
+						Login: username,
+						Senha: password,
+						App: app,
+					},
+					{
+						headers: {
+							'Content-Type': 'application/json',
+						},
+					},
+				)
+
+				this.currentToken = response.data
+				this.logger.log('Successfully authenticated with Smart API')
+
+				return this.currentToken
+			} catch (error) {
+				this.logger.error('Failed to authenticate with Smart API', error)
+				throw error
+			} finally {
+				this.tokenRefreshPromise = null
+			}
+		})()
+
+		return this.tokenRefreshPromise
 	}
 
 	async getAppointments(
