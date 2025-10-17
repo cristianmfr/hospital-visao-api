@@ -20,17 +20,20 @@ export class ClientsService {
 			.where('paciente.pctSituacao = :situacao', { situacao: 'ATIVO' })
 			.orderBy('paciente.pctNome', 'ASC')
 
-		if (query.limit) {
-			queryBuilder.take(query.limit)
-		}
+		const limit = query.limit || 100
+		queryBuilder.take(limit)
 
 		if (query.offset) {
 			queryBuilder.skip(query.offset)
 		}
 
-		const clients = await queryBuilder.getMany()
-
-		return clients.map((client) => this.transformClient(client))
+		try {
+			const clients = await queryBuilder.getMany()
+			return clients.map((client) => this.transformClient(client))
+		} catch (error) {
+			console.error('Error finding clients:', error)
+			throw error
+		}
 	}
 
 	async search(searchDto: ClientSearchDto): Promise<ClientResponseDto[]> {
@@ -41,8 +44,8 @@ export class ClientsService {
 		const cleanTerm = searchDto.term.replace(/\D/g, '')
 		if (cleanTerm.length > 0 && /^\d+$/.test(cleanTerm)) {
 			queryBuilder.andWhere(
-				'(REPLACE(REPLACE(REPLACE(REPLACE(paciente.pctTelefone, "(", ""), ")", ""), "-", ""), " ", "") = :phone OR REPLACE(REPLACE(REPLACE(REPLACE(paciente.pctCelular, "(", ""), ")", ""), "-", ""), " ", "") = :phone)',
-				{ phone: cleanTerm },
+				'(paciente.pctTelefone LIKE :phone OR paciente.pctCelular LIKE :phone)',
+				{ phone: `%${cleanTerm}%` },
 			)
 		} else {
 			queryBuilder.andWhere(
@@ -51,81 +54,102 @@ export class ClientsService {
 			)
 		}
 
-		if (searchDto.limit) {
-			queryBuilder.take(searchDto.limit)
-		}
+		const limit = searchDto.limit || 50
+		queryBuilder.take(limit)
 
 		if (searchDto.offset) {
 			queryBuilder.skip(searchDto.offset)
 		}
 
-		const clients = await queryBuilder.getMany()
-
-		return clients.map((client) => this.transformClient(client))
+		try {
+			const clients = await queryBuilder.getMany()
+			return clients.map((client) => this.transformClient(client))
+		} catch (error) {
+			console.error('Error searching clients:', error)
+			throw error
+		}
 	}
 
 	async findOne(id: number): Promise<ClientResponseDto | null> {
-		const client = await this.clientRepository.findOne({
-			where: { pctId: id, pctSituacao: 'ATIVO' },
-		})
+		try {
+			const client = await this.clientRepository.findOne({
+				where: { pctId: id, pctSituacao: 'ATIVO' },
+			})
 
-		if (!client) {
-			return null
+			if (!client) {
+				return null
+			}
+
+			return this.transformClient(client)
+		} catch (error) {
+			console.error('Error finding client by id:', error)
+			throw error
 		}
-
-		return this.transformClient(client)
 	}
 
 	async create(createClientDto: CreateClientDto): Promise<ClientResponseDto> {
-		const client = this.clientRepository.create({
-			pctNome: createClientDto.name,
-			pctTelefone: createClientDto.phone,
-			pctCelular: createClientDto.phone,
-			pctEmail: createClientDto.email,
-			pctNascimento: createClientDto.birthday,
-			pctCPF: createClientDto.cpf,
-			pctSituacao: 'ATIVO',
-			pctAlteracaoData: new Date(),
-		})
+		try {
+			const client = this.clientRepository.create({
+				pctNome: createClientDto.name,
+				pctTelefone: createClientDto.phone,
+				pctCelular: createClientDto.phone,
+				pctEmail: createClientDto.email,
+				pctNascimento: createClientDto.birthday,
+				pctCPF: createClientDto.cpf,
+				pctSituacao: 'ATIVO',
+				pctAlteracaoData: new Date(),
+			})
 
-		const savedClient = await this.clientRepository.save(client)
+			const savedClient = await this.clientRepository.save(client)
 
-		return this.transformClient(savedClient)
+			return this.transformClient(savedClient)
+		} catch (error) {
+			console.error('Error creating client:', error)
+			throw error
+		}
 	}
 
 	async update(
 		id: number,
 		updateClientDto: UpdateClientDto,
 	): Promise<ClientResponseDto> {
-		const client = await this.clientRepository.findOne({
-			where: { pctId: id, pctSituacao: 'ATIVO' },
-		})
+		try {
+			const client = await this.clientRepository.findOne({
+				where: { pctId: id, pctSituacao: 'ATIVO' },
+			})
 
-		if (!client) {
-			throw new NotFoundException(`Client with ID ${id} not found`)
+			if (!client) {
+				throw new NotFoundException(`Client with ID ${id} not found`)
+			}
+
+			if (updateClientDto.name) {
+				client.pctNome = updateClientDto.name
+			}
+
+			if (updateClientDto.email) {
+				client.pctEmail = updateClientDto.email
+			}
+
+			if (updateClientDto.cpf) {
+				client.pctCPF = updateClientDto.cpf
+			}
+
+			if (updateClientDto.birthday) {
+				client.pctNascimento = updateClientDto.birthday
+			}
+
+			client.pctAlteracaoData = new Date()
+
+			const updatedClient = await this.clientRepository.save(client)
+
+			return this.transformClient(updatedClient)
+		} catch (error) {
+			if (error instanceof NotFoundException) {
+				throw error
+			}
+			console.error('Error updating client:', error)
+			throw error
 		}
-
-		if (updateClientDto.name) {
-			client.pctNome = updateClientDto.name
-		}
-
-		if (updateClientDto.email) {
-			client.pctEmail = updateClientDto.email
-		}
-
-		if (updateClientDto.cpf) {
-			client.pctCPF = updateClientDto.cpf
-		}
-
-		if (updateClientDto.birthday) {
-			client.pctNascimento = updateClientDto.birthday
-		}
-
-		client.pctAlteracaoData = new Date()
-
-		const updatedClient = await this.clientRepository.save(client)
-
-		return this.transformClient(updatedClient)
 	}
 
 	private removePhoneFormatting(phone: string): string {
