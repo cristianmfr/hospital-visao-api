@@ -22,5 +22,15 @@ export const getDatabaseConfig = (
 	timezone: 'Z',
 	extra: {
 		connectionLimit: 10,
+		waitForConnections: true,
+		queueLimit: 0,
+		connectTimeout: 60000,
+		acquireTimeout: 60000,
+		timeout: 60000,
+		enableKeepAlive: true,
+		keepAliveInitialDelay: 0,
 	},
+	maxQueryExecutionTime: 10000,
+	retryAttempts: 3,
+	retryDelay: 3000,
 })
